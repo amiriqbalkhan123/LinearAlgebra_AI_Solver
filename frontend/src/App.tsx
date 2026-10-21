@@ -6,7 +6,7 @@ import {
   RotateCcw,
   Sigma,
 } from "lucide-react";
-
+import VectorGeometryEditor from "./components/vectors/VectorGeometryEditor";
 import MatrixEditor from "./components/math/MatrixEditor";
 import VectorSpacesEditor from "./components/vectors/VectorSpacesEditor";
 import SolutionViewer from "./components/solutions/SolutionViewer";
