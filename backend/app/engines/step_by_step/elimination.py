@@ -197,25 +197,34 @@ def determinant_with_steps(A: Matrix):
     if len(result["pivots"]) < A.rows:
         determinant = Integer(0)
 
+    
     steps = result["steps"]
 
-    steps.append(
-        {
-            "description": (
-                "Compute determinant from elimination "
-                f"pivots and {swaps} row swaps"
-            ),
-            "operation": "determinant",
-            "latex": (
-                r"\det(A)="
-                + latex((-1) ** swaps)
-                + r"\cdot"
-                + latex(result["pivot_product"])
-                + "="
-                + latex(determinant)
-            ),
-        }
-    )
+    if len(result["pivots"]) < A.rows:
+        explanation = (
+            "The matrix has fewer pivots than rows, "
+            "so its determinant is zero."
+        )
+        formula = r"\det(A)=0"
+    else:
+        explanation = (
+            "Multiply elimination pivots and apply "
+            f"the sign from {swaps} row swaps."
+        )
+        formula = (
+            r"\det(A)=(-1)^{"
+            + str(swaps)
+            + r"}\cdot"
+            + latex(result["pivot_product"])
+            + "="
+            + latex(determinant)
+        )
+
+    steps.append({
+        "description": explanation,
+        "operation": "determinant",
+        "latex": formula,
+    })
 
     return {
         "value": determinant,
