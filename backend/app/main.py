@@ -1,7 +1,7 @@
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-
+from app.api.v1.systems import router as systems_router
 from app.api.v1.solve import router as solver_router
 
 app = FastAPI(
