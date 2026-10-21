@@ -19,7 +19,10 @@ app.add_middleware(
 )
 
 app.include_router(solver_router, prefix="/api/v1")
-
+app.include_router(
+    systems_router,
+    prefix="/api/v1",
+)
 
 @app.get("/api/v1/health")
 def health_check():
