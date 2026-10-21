@@ -38,6 +38,7 @@ app.include_router(
     eigenanalysis_router,
     prefix="/api/v1",
 )
+
 @app.get("/api/v1/health")
 def health_check():
     return {
