@@ -49,6 +49,7 @@ app.include_router(
     problems_router,
     prefix="/api/v1",
 )
+
 @app.get("/api/v1/health")
 def health_check():
     return {
