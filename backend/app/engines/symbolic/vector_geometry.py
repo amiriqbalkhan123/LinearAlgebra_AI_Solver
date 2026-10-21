@@ -171,9 +171,13 @@ def solve_vector_geometry(question):
             if result else Matrix.zeros(vectors[0].rows, 0)
         )
 
+        
+        combined = original_matrix.row_join(output_matrix)
+
         verified = (
             len(result) == original_matrix.rank()
             and output_matrix.rank() == original_matrix.rank()
+            and combined.rank() == original_matrix.rank()
             and all(
                 zero(result[i].dot(result[j]))
                 for i in range(len(result))
@@ -184,6 +188,7 @@ def solve_vector_geometry(question):
                 or all(zero(u.dot(u) - 1) for u in result)
             )
         )
+
 
     else:
         raise ValueError("Unsupported vector operation.")
