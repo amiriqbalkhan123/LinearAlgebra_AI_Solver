@@ -30,9 +30,9 @@ const operations: {
   { value: "rank", label: "Matrix Rank" },
   { value: "rref", label: "Reduced Row Echelon Form" },
   {
-  value: "ref",
-  label: "Row Echelon Form (REF)",
-},
+    value: "ref",
+    label: "Row Echelon Form (REF)",
+  },
 ];
 
 const binaryOperations: MatrixOperation[] = [
