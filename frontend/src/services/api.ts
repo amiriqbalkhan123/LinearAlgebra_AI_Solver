@@ -2,24 +2,32 @@
 import axios from "axios";
 
 export type MatrixOperation =
+  | "addition"
+  | "subtraction"
+  | "multiplication"
   | "determinant"
+  | "inverse"
+  | "transpose"
   | "rank"
-  | "rref"
-  | "transpose";
+  | "rref";
+
+export type MatrixData = string[][];
 
 export interface MatrixRequest {
-  matrix: number[][];
+  matrix: MatrixData;
+  matrix_b?: MatrixData;
   operation: MatrixOperation;
 }
 
 export interface MatrixResponse {
   operation: MatrixOperation;
   input_latex: string;
+  matrix_b_latex: string | null;
   result: string;
   result_latex: string;
 }
 
-const api = axios.create({
+export const api = axios.create({
   baseURL: "/api/v1",
   timeout: 30000,
 });
