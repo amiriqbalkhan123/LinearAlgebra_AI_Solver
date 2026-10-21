@@ -239,19 +239,19 @@ export default function App() {
             Matrix Decompositions
           </button>
 
-          
-<button
-  type="button"
-  aria-pressed={activeTab === "recognition"}
-  onClick={() => setActiveTab("recognition")}
-  className={`rounded-lg px-4 py-2 ${
-    activeTab === "recognition"
-      ? "bg-blue-600 text-white"
-      : "bg-zinc-800 text-zinc-300 hover:bg-zinc-700"
-  }`}
->
-  Image Recognition
-</button>
+                    
+          <button
+            type="button"
+            aria-pressed={activeTab === "recognition"}
+            onClick={() => setActiveTab("recognition")}
+            className={`rounded-lg px-4 py-2 ${
+              activeTab === "recognition"
+                ? "bg-blue-600 text-white"
+                : "bg-zinc-800 text-zinc-300 hover:bg-zinc-700"
+            }`}
+          >
+            Image Recognition
+          </button>
 
 
 
