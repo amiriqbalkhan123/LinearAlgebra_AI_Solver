@@ -59,9 +59,16 @@ function defaultMatrixB(): MatrixData {
 }
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<
-    "matrices" | "systems" | "vectors" | "geometry" | "eigen"
-  >("matrices");
+  type SolverTab =
+  | "matrices"
+  | "systems"
+  | "vectors"
+  | "geometry"
+  | "eigen"
+  | "decompositions";
+
+const [activeTab, setActiveTab] =
+  useState<SolverTab>("matrices");
   const [matrixA, setMatrixA] =
     useState<MatrixData>(defaultMatrixA);
 
