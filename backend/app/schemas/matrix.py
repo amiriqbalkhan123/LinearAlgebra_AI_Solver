@@ -13,6 +13,7 @@ MatrixOperation = Literal[
     "inverse",
     "transpose",
     "rank",
+    "ref",
     "rref",
 ]
 
