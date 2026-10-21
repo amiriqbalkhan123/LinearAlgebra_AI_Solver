@@ -4,6 +4,18 @@ from pathlib import Path
 import shutil
 
 import pytesseract
+from pathlib import Path
+import shutil
+
+TESSERACT_PATH = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+
+if Path(TESSERACT_PATH).is_file():
+    pytesseract.pytesseract.tesseract_cmd = TESSERACT_PATH
+else:
+    pytesseract.pytesseract.tesseract_cmd = (
+        shutil.which("tesseract") or "tesseract"
+    )
+    
 from PIL import Image
 
 from app.ai.ocr.image_processor import (
