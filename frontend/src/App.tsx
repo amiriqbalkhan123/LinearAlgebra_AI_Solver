@@ -12,6 +12,7 @@ import VectorSpacesEditor from "./components/vectors/VectorSpacesEditor";
 import SolutionViewer from "./components/solutions/SolutionViewer";
 import LinearSystemEditor from "./components/systems/LinearSystemEditor";
 import EigenanalysisEditor from "./components/eigen/EigenanalysisEditor";
+import DecompositionEditor from "./components/decompositions/DecompositionEditor";
 import {
   solveMatrix,
   type MatrixData,
