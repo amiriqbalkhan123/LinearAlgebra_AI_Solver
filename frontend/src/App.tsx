@@ -356,6 +356,7 @@ export default function App() {
         {activeTab === "decompositions" && (
           <DecompositionEditor />
         )}
+        {activeTab === "recognition" && <ImageRecognition />}
 
         <footer className="border-t border-zinc-800 pt-5 text-center text-xs text-zinc-500">
           LinearAI — Powered by Python, FastAPI, and SymPy
