@@ -222,6 +222,21 @@ export default function App() {
             Eigenanalysis
           </button>
 
+          
+<button
+  type="button"
+  aria-pressed={activeTab === "decompositions"}
+  onClick={() => setActiveTab("decompositions")}
+  className={`rounded-lg px-4 py-2 ${
+    activeTab === "decompositions"
+      ? "bg-blue-600 text-white"
+      : "bg-zinc-800 text-zinc-300 hover:bg-zinc-700"
+  }`}
+>
+  Matrix Decompositions
+</button>
+
+
 
 
         </nav>
