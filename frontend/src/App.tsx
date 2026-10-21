@@ -9,7 +9,7 @@ import {
 
 import MatrixEditor from "./components/math/MatrixEditor";
 import SolutionViewer from "./components/solutions/SolutionViewer";
-
+import LinearSystemEditor from "./components/systems/LinearSystemEditor";
 import {
   solveMatrix,
   type MatrixData,
