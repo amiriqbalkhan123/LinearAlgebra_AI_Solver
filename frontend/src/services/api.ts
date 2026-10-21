@@ -9,6 +9,7 @@ export type MatrixOperation =
   | "inverse"
   | "transpose"
   | "rank"
+  | "ref"
   | "rref";
 
 export type MatrixData = string[][];
