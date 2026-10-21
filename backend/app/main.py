@@ -8,6 +8,7 @@ from app.api.v1.vector_spaces import router as vector_spaces_router
 from app.api.v1.decompositions import router as decomposition_router
 from app.api.v1.vector_geometry import router as vector_geometry_router
 from app.api.v1.problems import router as problems_router
+from app.api.v1.recognition import router as recognition_router
 app = FastAPI(
     title="LinearAI API",
     version="1.0.0",
