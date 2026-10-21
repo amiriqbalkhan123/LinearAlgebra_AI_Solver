@@ -66,7 +66,9 @@ export default function App() {
     | "vectors"
     | "geometry"
     | "eigen"
-    | "decompositions";
+    | "decompositions"
+    | "recognition"
+    ;
 
   const [activeTab, setActiveTab] =
     useState<SolverTab>("matrices");
