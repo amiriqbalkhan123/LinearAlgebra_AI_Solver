@@ -20,13 +20,23 @@ export interface MatrixRequest {
   operation: MatrixOperation;
 }
 
+
+export interface SolutionStep {
+  description: string;
+  operation: string | null;
+  latex: string;
+}
+
 export interface MatrixResponse {
   operation: MatrixOperation;
   input_latex: string;
   matrix_b_latex: string | null;
   result: string;
   result_latex: string;
+  steps: SolutionStep[];
+  verified: boolean;
 }
+
 
 export const api = axios.create({
   baseURL: "/api/v1",
