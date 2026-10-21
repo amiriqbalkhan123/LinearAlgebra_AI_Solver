@@ -294,6 +294,7 @@ export default function App() {
 
         {activeTab === "systems" && <LinearSystemEditor />}
         {activeTab === "vectors" && <VectorSpacesEditor />}
+        {activeTab === "geometry" && <VectorGeometryEditor />}
 
         <footer className="border-t border-zinc-800 pt-5 text-center text-xs text-zinc-500">
           LinearAI — Powered by Python, FastAPI, and SymPy
