@@ -336,8 +336,8 @@ export default function App() {
         {activeTab === "geometry" && <VectorGeometryEditor />}
         {activeTab === "eigen" && <EigenanalysisEditor />}
         {activeTab === "decompositions" && (
-  <DecompositionEditor />
-)}
+          <DecompositionEditor />
+        )}
 
         <footer className="border-t border-zinc-800 pt-5 text-center text-xs text-zinc-500">
           LinearAI — Powered by Python, FastAPI, and SymPy
