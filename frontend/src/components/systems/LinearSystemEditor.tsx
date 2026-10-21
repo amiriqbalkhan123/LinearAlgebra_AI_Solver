@@ -4,7 +4,6 @@ import axios from "axios";
 
 import MatrixEditor from "../math/MatrixEditor";
 import SystemSolution from "./SystemSolution";
-
 import type { MatrixData } from "../../services/api";
 import {
   solveLinearSystem,
