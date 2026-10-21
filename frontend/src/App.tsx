@@ -133,15 +133,46 @@ export default function App() {
             </p>
           </div>
 
-          <button
+          {activeTab === "matrices" && (
+            <button
+            type="button"
             onClick={reset}
             className="flex items-center gap-2 rounded-lg border border-zinc-700 px-4 py-2 hover:bg-zinc-800"
           >
             <RotateCcw size={16} />
             Reset
-          </button>
+            </button>
+          )}
         </header>
 
+        <nav aria-label="Solver mode" className="flex flex-wrap gap-2 border-b border-zinc-800 pb-4">
+          <button
+            type="button"
+            aria-pressed={activeTab === "matrices"}
+            onClick={() => setActiveTab("matrices")}
+            className={`rounded-lg px-4 py-2 ${
+              activeTab === "matrices"
+                ? "bg-blue-600 text-white"
+                : "bg-zinc-800 text-zinc-300 hover:bg-zinc-700"
+            }`}
+          >
+            Matrix Calculator
+          </button>
+          <button
+            type="button"
+            aria-pressed={activeTab === "systems"}
+            onClick={() => setActiveTab("systems")}
+            className={`rounded-lg px-4 py-2 ${
+              activeTab === "systems"
+                ? "bg-blue-600 text-white"
+                : "bg-zinc-800 text-zinc-300 hover:bg-zinc-700"
+            }`}
+          >
+            Linear Systems
+          </button>
+        </nav>
+
+        {activeTab === "matrices" && (
         <section className="space-y-5">
           <div>
             <h2 className="text-2xl font-semibold">
@@ -229,6 +260,9 @@ export default function App() {
             <SolutionViewer solution={solution} />
           )}
         </section>
+        )}
+
+        {activeTab === "systems" && <LinearSystemEditor />}
 
         <footer className="border-t border-zinc-800 pt-5 text-center text-xs text-zinc-500">
           LinearAI — Powered by Python, FastAPI, and SymPy
