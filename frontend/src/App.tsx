@@ -1,156 +1,231 @@
 
 import { useState } from "react";
+import axios from "axios";
+import {
+  Calculator,
+  RotateCcw,
+  Sigma,
+} from "lucide-react";
+
+import MatrixEditor from "./components/math/MatrixEditor";
+import SolutionViewer from "./components/solutions/SolutionViewer";
+
 import {
   solveMatrix,
+  type MatrixData,
   type MatrixOperation,
   type MatrixResponse,
 } from "./services/api";
 
-const operations: MatrixOperation[] = [
-  "determinant",
-  "rank",
-  "rref",
-  "transpose",
+const operations: {
+  value: MatrixOperation;
+  label: string;
+}[] = [
+  { value: "addition", label: "Matrix Addition" },
+  { value: "subtraction", label: "Matrix Subtraction" },
+  { value: "multiplication", label: "Matrix Multiplication" },
+  { value: "determinant", label: "Determinant" },
+  { value: "inverse", label: "Matrix Inverse" },
+  { value: "transpose", label: "Matrix Transpose" },
+  { value: "rank", label: "Matrix Rank" },
+  { value: "rref", label: "Reduced Row Echelon Form" },
 ];
 
+const binaryOperations: MatrixOperation[] = [
+  "addition",
+  "subtraction",
+  "multiplication",
+];
+
+function defaultMatrixA(): MatrixData {
+  return [
+    ["4", "1"],
+    ["0", "2"],
+  ];
+}
+
+function defaultMatrixB(): MatrixData {
+  return [
+    ["1", "2"],
+    ["3", "4"],
+  ];
+}
+
 export default function App() {
-  const [matrix, setMatrix] = useState<number[][]>([
-    [4, 1],
-    [0, 2],
-  ]);
+  const [matrixA, setMatrixA] =
+    useState<MatrixData>(defaultMatrixA);
+
+  const [matrixB, setMatrixB] =
+    useState<MatrixData>(defaultMatrixB);
 
   const [operation, setOperation] =
     useState<MatrixOperation>("determinant");
 
-  const [result, setResult] =
+  const [solution, setSolution] =
     useState<MatrixResponse | null>(null);
 
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  function updateCell(
-    row: number,
-    col: number,
-    value: number
-  ) {
-    setMatrix((previous) =>
-      previous.map((items, rowIndex) =>
-        items.map((item, colIndex) =>
-          rowIndex === row && colIndex === col
-            ? value
-            : item
-        )
-      )
-    );
-    setResult(null);
+  const requiresMatrixB =
+    binaryOperations.includes(operation);
+
+  function reset() {
+    setMatrixA(defaultMatrixA());
+    setMatrixB(defaultMatrixB());
+    setOperation("determinant");
+    setSolution(null);
+    setError("");
   }
 
   async function handleSolve() {
     setLoading(true);
     setError("");
-    setResult(null);
+    setSolution(null);
 
     try {
-      const answer = await solveMatrix({
-        matrix,
+      const result = await solveMatrix({
+        matrix: matrixA,
+        matrix_b: requiresMatrixB
+          ? matrixB
+          : undefined,
         operation,
       });
-      setResult(answer);
-    } catch {
-      setError("Unable to solve. Check the matrix and API.");
+
+      setSolution(result);
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        const detail = err.response?.data?.detail;
+
+        setError(
+          typeof detail === "string"
+            ? detail
+            : "Invalid input or backend unavailable."
+        );
+      } else {
+        setError("An unexpected error occurred.");
+      }
     } finally {
       setLoading(false);
     }
   }
 
   return (
-    <main className="min-h-screen bg-zinc-950 p-6 text-white">
-      <div className="mx-auto max-w-3xl space-y-8">
-        <header className="border-b border-zinc-800 pb-6">
-          <h1 className="text-4xl font-bold">
-            LinearAI
-          </h1>
-          <p className="mt-2 text-zinc-400">
-            Intelligent Linear Algebra Solver
-          </p>
+    <main className="min-h-screen bg-zinc-950 text-white">
+      <div className="mx-auto max-w-5xl space-y-8 px-5 py-8">
+        <header className="flex flex-wrap items-center justify-between gap-4 border-b border-zinc-800 pb-6">
+          <div>
+            <div className="flex items-center gap-3">
+              <Sigma className="text-blue-400" size={32} />
+              <h1 className="text-3xl font-bold">
+                LinearAI
+              </h1>
+            </div>
+            <p className="mt-2 text-zinc-400">
+              Intelligent Linear Algebra Solver
+            </p>
+          </div>
+
+          <button
+            onClick={reset}
+            className="flex items-center gap-2 rounded-lg border border-zinc-700 px-4 py-2 hover:bg-zinc-800"
+          >
+            <RotateCcw size={16} />
+            Reset
+          </button>
         </header>
 
-        <section className="rounded-xl border border-zinc-800 bg-zinc-900 p-6">
-          <h2 className="mb-4 text-xl font-semibold">
-            Matrix Input
-          </h2>
+        <section className="space-y-5">
+          <div>
+            <h2 className="text-2xl font-semibold">
+              Matrix Calculator
+            </h2>
+            <p className="mt-2 text-sm text-zinc-400">
+              Enter your values, select an operation,
+              and calculate exact results.
+            </p>
+          </div>
 
-          <div className="grid grid-cols-2 gap-3">
-            {matrix.map((row, rowIndex) =>
-              row.map((value, colIndex) => (
-                <input
-                  key={`${rowIndex}-${colIndex}`}
-                  type="number"
-                  value={value}
-                  onChange={(event) =>
-                    updateCell(
-                      rowIndex,
-                      colIndex,
-                      Number(event.target.value)
-                    )
-                  }
-                  className="w-full rounded-lg border border-zinc-700 bg-zinc-800 p-3 text-center"
-                />
-              ))
+          <div className={`grid gap-5 ${requiresMatrixB ? "lg:grid-cols-2" : ""}`}>
+            <MatrixEditor
+              name="A"
+              matrix={matrixA}
+              onChange={(value) => {
+                setMatrixA(value);
+                setSolution(null);
+              }}
+            />
+
+            {requiresMatrixB && (
+              <MatrixEditor
+                name="B"
+                matrix={matrixB}
+                onChange={(value) => {
+                  setMatrixB(value);
+                  setSolution(null);
+                }}
+              />
             )}
           </div>
 
-          <label
-            htmlFor="operation"
-            className="mt-6 block text-sm text-zinc-300"
-          >
-            Mathematical Operation
-          </label>
+          <section className="rounded-xl border border-zinc-800 bg-zinc-900 p-5">
+            <label
+              htmlFor="operation"
+              className="mb-3 block font-medium"
+            >
+              Mathematical Operation
+            </label>
 
-          <select
-            id="operation"
-            value={operation}
-            onChange={(event) => {
-              setOperation(
-                event.target.value as MatrixOperation
-              );
-              setResult(null);
-            }}
-            className="mt-2 w-full rounded-lg border border-zinc-700 bg-zinc-800 p-3"
-          >
-            {operations.map((item) => (
-              <option key={item} value={item}>
-                {item.toUpperCase()}
-              </option>
-            ))}
-          </select>
+            <select
+              id="operation"
+              value={operation}
+              onChange={(event) => {
+                setOperation(
+                  event.target.value as MatrixOperation
+                );
+                setSolution(null);
+                setError("");
+              }}
+              className="w-full rounded-lg border border-zinc-700 bg-zinc-800 p-3"
+            >
+              {operations.map((item) => (
+                <option
+                  key={item.value}
+                  value={item.value}
+                >
+                  {item.label}
+                </option>
+              ))}
+            </select>
 
-          <button
-            type="button"
-            onClick={handleSolve}
-            disabled={loading}
-            className="mt-6 w-full rounded-lg bg-blue-600 p-3 font-semibold hover:bg-blue-500 disabled:opacity-50"
-          >
-            {loading ? "Solving..." : "Solve Matrix"}
-          </button>
+            <button
+              type="button"
+              onClick={handleSolve}
+              disabled={loading}
+              className="mt-5 flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 p-3 font-semibold transition-colors hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              <Calculator size={18} />
+              {loading ? "Calculating..." : "Solve"}
+            </button>
+          </section>
+
+          {error && (
+            <div
+              role="alert"
+              className="rounded-lg border border-red-900 bg-red-950 p-4 text-red-300"
+            >
+              {error}
+            </div>
+          )}
+
+          {solution && (
+            <SolutionViewer solution={solution} />
+          )}
         </section>
 
-        {error && (
-          <p role="alert" className="text-red-400">
-            {error}
-          </p>
-        )}
-
-        {result && (
-          <section className="rounded-xl border border-zinc-800 bg-zinc-900 p-6">
-            <h2 className="mb-3 text-xl font-semibold">
-              Solution
-            </h2>
-            <p className="break-all font-mono text-green-400">
-              {result.result}
-            </p>
-          </section>
-        )}
+        <footer className="border-t border-zinc-800 pt-5 text-center text-xs text-zinc-500">
+          LinearAI — Powered by Python, FastAPI, and SymPy
+        </footer>
       </div>
     </main>
   );
