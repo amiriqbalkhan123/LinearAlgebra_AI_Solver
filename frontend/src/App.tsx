@@ -58,8 +58,8 @@ function defaultMatrixB(): MatrixData {
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<
-  "matrices" | "systems" | "vectors" | "geometry"
->("matrices");
+    "matrices" | "systems" | "vectors" | "geometry"
+  >("matrices");
   const [matrixA, setMatrixA] =
     useState<MatrixData>(defaultMatrixA);
 
