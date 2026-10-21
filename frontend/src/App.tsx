@@ -28,11 +28,11 @@ const operations: {
   { value: "inverse", label: "Matrix Inverse" },
   { value: "transpose", label: "Matrix Transpose" },
   { value: "rank", label: "Matrix Rank" },
-  { value: "rref", label: "Reduced Row Echelon Form" },
   {
-    value: "ref",
-    label: "Row Echelon Form (REF)",
-  },
+  value: "ref",
+  label: "Row Echelon Form (REF)",
+},
+  { value: "rref", label: "Reduced Row Echelon Form" },
 ];
 
 const binaryOperations: MatrixOperation[] = [
