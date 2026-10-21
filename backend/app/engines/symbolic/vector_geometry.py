@@ -90,8 +90,8 @@ def solve_vector_geometry(question):
         add_step("Calculate the cosine of the angle.", cosine)
         add_step("Apply inverse cosine (radians).", result)
         verified = zero(
-    cosine * a.norm() * b.norm() - a.dot(b)
-)
+            cosine * a.norm() * b.norm() - a.dot(b)
+        )
 
     elif op == "orthogonality":
         dot = a.dot(b)
