@@ -15,7 +15,7 @@ else:
     pytesseract.pytesseract.tesseract_cmd = (
         shutil.which("tesseract") or "tesseract"
     )
-    
+
 from PIL import Image
 
 from app.ai.ocr.image_processor import (
@@ -61,25 +61,3 @@ def recognize_text(image: Image.Image) -> str:
         ) from error
 
 
-@lru_cache(maxsize=1)
-def get_formula_model():
-    try:
-        from pix2tex.cli import LatexOCR
-        return LatexOCR()
-    except (ImportError, OSError, RuntimeError) as error:
-        raise OCRUnavailableError(
-            "pix2tex could not be initialized. "
-            "Check its dependencies and model files."
-        ) from error
-
-
-def recognize_formula(image: Image.Image) -> str:
-    model = get_formula_model()
-    prepared = prepare_formula_image(image)
-
-    try:
-        return str(model(prepared)).strip()
-    except (RuntimeError, ValueError) as error:
-        raise OCRUnavailableError(
-            "Mathematical OCR inference failed."
-        ) from error
