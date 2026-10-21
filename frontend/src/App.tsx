@@ -29,9 +29,9 @@ const operations: {
   { value: "transpose", label: "Matrix Transpose" },
   { value: "rank", label: "Matrix Rank" },
   {
-  value: "ref",
-  label: "Row Echelon Form (REF)",
-},
+    value: "ref",
+    label: "Row Echelon Form (REF)",
+  },
   { value: "rref", label: "Reduced Row Echelon Form" },
 ];
 
