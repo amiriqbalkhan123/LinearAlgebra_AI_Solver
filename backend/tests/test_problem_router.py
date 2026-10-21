@@ -143,7 +143,7 @@ def test_determinant_answer():
             },
         },
     )
-    m
+    
 
     assert response.status_code == 200
     assert response.json()["result"]["result"] == "8"
