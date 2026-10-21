@@ -185,6 +185,21 @@ export default function App() {
             Vector Spaces
           </button>
 
+          
+<button
+  type="button"
+  aria-pressed={activeTab === "geometry"}
+  onClick={() => setActiveTab("geometry")}
+  className={`rounded-lg px-4 py-2 ${
+    activeTab === "geometry"
+      ? "bg-blue-600 text-white"
+      : "bg-zinc-800 text-zinc-300 hover:bg-zinc-700"
+  }`}
+>
+  Vector Geometry
+</button>
+
+
         </nav>
 
         {activeTab === "matrices" && (
