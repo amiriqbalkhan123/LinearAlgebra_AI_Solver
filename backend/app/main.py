@@ -5,6 +5,7 @@ from app.api.v1.systems import router as systems_router
 from app.api.v1.solve import router as solver_router
 from app.api.v1.eigenanalysis import router as eigenanalysis_router
 from app.api.v1.vector_spaces import router as vector_spaces_router
+from app.api.v1.decompositions import router as decomposition_router
 from app.api.v1.vector_geometry import router as vector_geometry_router
 app = FastAPI(
     title="LinearAI API",
